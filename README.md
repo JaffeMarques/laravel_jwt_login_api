@@ -9,12 +9,19 @@ Build for reactJs  with jwt-authentication
 ## Usage
 
 Rename .env.example to .env
+
 Update DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD in .env file to yours.
+
 In command line :
+
 composer update
+
 Php artisan key:generate
+
 php artisan migrate
+
 npm install
+
 npm run dev
 
 ## Features
