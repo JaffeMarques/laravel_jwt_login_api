@@ -93,31 +93,32 @@ Class ResponseService{
    * Test validation whit customers warnings
    *
    * @param  array $request
-   * @return json
+   * @return array
    */
   public static function validateUser(StoreUser $request){
+    $err = [];
     if($request->password != $request->passwordb){
-      return 'As senhas não conferem';
+      $err['pass1'] = 'As senhas não conferem';
     }
     if(preg_match("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/", $request->password) < 1){
-      return  "Deve conter pelo menos 8 caracteres, 1 caractere especial e 1  número";
+      $err['pass2'] = "Deve conter pelo menos 8 caracteres, 1 caractere especial e 1  número";
     }
     if(empty($request->name) || (preg_match('/\s/', $request->name) < 1) ){
-      return 'Preencha com o nome e sobrenome';
+      $err['name'] = 'Preencha com o nome e sobrenome';
     }
     if(empty($request->career)){
-      return 'Campo obrigatório';
+      $err['career'] = 'Campo obrigatório';
     }
     if(preg_match('/^\d{3}\x2E\d{3}\x2E\d{3}\x2D\d{2}$/', $request->cpf) < 1){
-      return 'Preencha com um CPF válido';
+      $err['cpf'] = 'Preencha com um CPF válido';
     }
     if(preg_match('/^[0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2}$/', $request->born_date) < 1){
-      return 'Preencha com um formato válido: dd/mm/aaaa';
+      $err['date'] = 'Preencha com um formato válido: dd/mm/aaaa';
     }
     if (time() < strtotime('+18 years', strtotime($request->born_date))) {
-      return 'Você precisa ter mais de 18 anos';
+      $err['year'] = 'Você precisa ter mais de 18 anos';
     }
-    return 1;
+    return $err;
   }
 
   /**
