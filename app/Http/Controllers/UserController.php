@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         try{   
             $isValidUser = ResponseService::validateUser($request);
-            if($isValidUser == 1){
+            if(isset($isValidUser)){
                 $user = $this->user->create($request->all());
             } else {
                 return response()->json([
